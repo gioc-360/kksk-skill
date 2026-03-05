@@ -1,0 +1,82 @@
+<!-- KKSK Context Engineering Template -->
+<!-- Use during Kime (Phase 4) to prompt AI with maximum context and minimum scope creep. -->
+<!-- Fill in each section with the concrete outputs from the previous three phases. -->
+
+<context>
+  <pain>
+    <!-- Kamae output: The one-sentence pain statement, decomposed. -->
+    <who>[Role of the person experiencing the pain]</who>
+    <cost>[Quantified cost: hours/week, dollars/month, error rate, etc.]</cost>
+    <task>[The specific task that causes the pain]</task>
+    <root_cause>[Why the current process fails — a structural problem, not a missing feature]</root_cause>
+    <pain_statement>[The complete one-sentence Kamae output]</pain_statement>
+  </pain>
+
+  <wedge>
+    <!-- Kamae sub-gate: The three Wedge Test answers. -->
+    <desperate_audience>[Who has this pain at 10x intensity — a specific person/role, not a demographic]</desperate_audience>
+    <one_dimension>[The single axis where this solution is undeniably better]</one_dimension>
+    <saying_no_to>[Users, features, and markets you are explicitly refusing to serve]</saying_no_to>
+  </wedge>
+
+  <current_workaround>
+    <!-- Kuzushi output: The step-by-step process they use today. -->
+    <!-- Describe the actual steps. Mark where 80% of time concentrates. -->
+    <steps>
+      [Step 1: ...]
+      [Step 2: ...]
+      [Step 3: ...]
+      [...]
+    </steps>
+    <bottleneck>[Where most pain concentrates — this is the target]</bottleneck>
+  </current_workaround>
+
+  <function>
+    <!-- Sasoi output: The one function. Named and typed. -->
+    <name>[function_name]</name>
+    <input>[input_type — be specific about shape and fields]</input>
+    <output>[output_type — be specific about shape and fields]</output>
+    <description>[One sentence: what transformation does this perform?]</description>
+  </function>
+
+  <constraints>
+    <!-- What NOT to build. This section prevents scope expansion during generation. -->
+    <!-- Being explicit about what's out of scope is more important than what's in scope. -->
+    <out_of_scope>[List everything you are NOT building: no UI, no auth, no database, no API, etc.]</out_of_scope>
+    <tech_stack>[Language, libraries, and runtime constraints]</tech_stack>
+    <done_condition>[How you will measure success — who uses it, how often, replacing what]</done_condition>
+  </constraints>
+</context>
+
+<instruction>
+  Build ONLY the function described above.
+  Do not add features, UI, or infrastructure beyond what is specified.
+  Optimize for correctness and usability, not completeness.
+  The build should feel inevitable given the context above.
+</instruction>
+
+<!--
+WHY THIS TEMPLATE WORKS:
+
+1. PAIN BEFORE SOLUTION
+   The <pain> and <wedge> blocks give the model the WHY before the WHAT.
+   LLMs generate smarter code when they understand the problem, not just the spec.
+
+2. WORKAROUNDS ARE REQUIREMENTS
+   The <current_workaround> block encodes what users actually do — more
+   reliable than what they say they want. The model builds to replace the
+   workaround, not to satisfy an abstract spec.
+
+3. TYPED INPUTS AND OUTPUTS
+   The <function> block constrains the solution space. No ambiguity about
+   what goes in and what comes out means no room for scope creep.
+
+4. EXPLICIT OUT-OF-SCOPE
+   The <constraints> block prevents the model from "helping" by adding
+   auth, dashboards, databases, and infrastructure you didn't ask for.
+   Saying what NOT to build is more important than saying what to build.
+
+5. DONE CONDITION UP FRONT
+   The <done_condition> forces the build toward measurable adoption,
+   not "it compiles" or "the tests pass."
+-->

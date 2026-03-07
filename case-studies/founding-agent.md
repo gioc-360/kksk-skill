@@ -147,7 +147,25 @@ Final deck audited against every rubric requirement:
 - Cost for 100 users: ✅
 - Revenue vs. cost + tradeoffs: ✅
 
-The data requirement was the only gap caught during audit. It was patched into the AI problem slide before final export.
+The data requirement was the only gap caught during the first audit. It was patched into the AI problem slide before the next pass.
+
+### Incognito Pressure Test
+
+After the rubric audit passed clean, the user ran the final deck through an incognito Claude session — no memories, no skills loaded, fresh context. The purpose: get an unbiased critique from a stripped-down agent that had no investment in the work and no access to the methodology that produced it. This is the user's version of the self-evaluation pattern from OpenAI's data agent article: the system assesses its own output quality through an independent channel.
+
+The incognito session surfaced two vulnerabilities in the evaluation section (the highest-weighted rubric category at 5 points):
+
+**Vulnerability 1: Circular ground truth.** The agent's scoping accuracy was being tested against the user's own manually-scoped builds. A grader could reasonably ask: if you scoped it and you're judging the agent against your own judgment, isn't the benchmark self-referential?
+
+**Fix:** Added a calibration check — 5 of the 20 test projects get independently scoped by a second builder. The agent is scored against both scopes. The agreement rate between human scopers validates the ground truth itself. This turns a weakness into a methodological strength: you're not just testing the agent, you're testing the test.
+
+**Vulnerability 2: Pre-deployment timing on taste calibration.** Layer 3 (taste calibration via rising acceptance rates) was framed as an ongoing production metric. The rubric explicitly asks "how would you evaluate before deploying to consumers." Tracking acceptance rates over time is a post-launch signal, not a pre-launch eval.
+
+**Fix:** Reframed as a pre-launch simulation — run 10 sequential builds before any consumer touches the agent, measure whether first-proposal acceptance rate rises from build 1 to build 10. Same signal, explicitly positioned as something tested before deployment.
+
+Both fixes were patched into the eval slide and the video script. The incognito pressure test added approximately 15 minutes to the project but strengthened the highest-weighted section of the rubric.
+
+**Why this matters for the case study:** The user used a deliberately weakened version of the tool (no skills, no memory) to quality-gate the output of the fully-loaded version. That's the Founding Agent thesis in miniature: the value isn't in the agent's raw capability, it's in the coordination layer that decides when and how to deploy capability. Even the QA process embodied the product philosophy.
 
 ---
 
@@ -161,4 +179,6 @@ The data requirement was the only gap caught during audit. It was patched into t
 
 **4. The deck iteration pattern mirrors KKSK's own philosophy.** Four deck versions, each rejected and rebuilt. Position before submission: the user established what the deck needed to *do* (reading deck for Manzoor, Founding Agent metaphor, rubric compliance) before committing to how it looked. The visual pivots were transitions, not resets, because the scope never changed.
 
-**5. The meta-irony is the point.** The Founding Agent pitch was itself built using the Founding Agent methodology — KKSK scoped it, 4R structured it, managerial-comms formatted it, the user's taste gated every phase. The presentation is a live case study of its own thesis. This wasn't planned. It emerged because the framework works.
+**5. Pressure-test with a stripped-down agent.** The incognito session caught two eval vulnerabilities that the fully-loaded session missed. The loaded agent had context on the rubric, the OpenAI article, and the full conversation history — it was too close to the work. The stripped agent saw it cold and found the holes. Lesson: when the stakes are high, evaluate your output with a deliberately dumber version of your tool. Familiarity breeds blind spots.
+
+**6. The meta-irony is the point.** The Founding Agent pitch was itself built using the Founding Agent methodology — KKSK scoped it, 4R structured it, managerial-comms formatted it, the user's taste gated every phase. The presentation is a live case study of its own thesis. This wasn't planned. It emerged because the framework works.
